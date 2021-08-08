@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.section`
+border-top: 1px solid ${({theme: { common }}) => common.cyan};
   padding: 10px;
   background: ${({ theme: { backgrounds } }) => backgrounds.headerbg};
 `;
