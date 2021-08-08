@@ -12,7 +12,7 @@ That's a front end only ecommerce, being built with react, typescript and styled
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-### Libs used so fa
+### Libs used so far
 * Styled components
 * React router dom
 
