@@ -24,13 +24,15 @@ That's a front end only ecommerce, being built with react, typescript and styled
 -----------------------------------------------------------------------------------------------------------------------------
 
 ##### Progress
-- [x] Start the project
-- [x] Start creating components styles
+- [x] Start the project.
+- [x] Start creating components styles.
 - [ ] Header component with cart icon that shows items quantity in the cart.
 - [ ] Store cart items in local storage, so that the user doesn't lost their items when closes the browser.
-- [ ] Filter products list not only by filter worlds, but also clicking in a category
-- [ ] Checkout form with validations
-- [ ] Modal with shipping summary
+- [x] Filter products list not only by filter worlds, but also clicking in a category.
+- [ ] Checkout form with validations.
+- [ ] Modal with shipping summary.
+- [ ] Create avaliations field on detailed page for every product.
+- [ ] Keep track of user's shipping historic, and create a dashboard to see it
 
 -----------------------------------------------------------------------------------------------------------------------------
 
