@@ -16,17 +16,6 @@ export const CategoryList = styled.ul`
   }
 `;
 
-export const Category = styled.li`
-  margin: 10px 5px;
-  text-align: center;
-  @media screen and (min-width: 300px) {
-      margin: 10px 15px;
-  }
-  @media screen and (min-width: 800px) {
-      margin: 10px 30px;
-  }
-`;
-
 export const Wrapper = styled.div`
   margin: auto;
   border-radius: 50%;
@@ -37,12 +26,28 @@ export const Wrapper = styled.div`
   align-items: center;
   background: ${({ theme: { backgrounds } }) => backgrounds.headerbg};
   border: 2px solid transparent;
-  :hover {
-    border-color: ${({ theme: { common } }) => common.cyan};
-  }
   @media screen and (min-width: 800px) {
       width: 70px;
       height: 70px;
+  }
+`;
+
+export const Category = styled.li`
+  margin: 10px 5px;
+  text-align: center;
+  cursor: pointer;
+  @media screen and (min-width: 300px) {
+      margin: 10px 15px;
+  }
+  @media screen and (min-width: 800px) {
+      margin: 10px 30px;
+  }
+  :hover {
+    opacity: 0.7;
+  }
+  :hover ${Wrapper} {
+    border-color: ${({ theme: { common } }) => common.cyan};
+
   }
 `;
 
@@ -61,18 +66,27 @@ export const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-  border: 0 none;
   border-radius: 2px;
-  padding: 10px;
+  padding: 15px;
+  border: 0 none;
   background: #fff;
+  transition: .3s;
+  font-size: 1.2rem;
   @media screen and (min-width: 400px) {
       width: 80%;
   }
   @media screen and (min-width: 1000px) {
       width: 60%;
   }
+  ::placeholder {
+    font-size: 1.2rem;
+  }
+  :hover {
+    opacity: 0.5;
+  }
   :focus {
-    caret-color: ${({theme: { common }}) => common.cyan};
+    opacity: 1;
+    caret-color: ${({theme: { backgrounds }}) => backgrounds.underheader};
     outline: 0;
   }
 `;

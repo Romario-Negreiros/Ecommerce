@@ -1,6 +1,6 @@
-import Product from "../interfaces/FakeStoreRes";
+import Product from "../interfaces/productsInterface";
 
-const doFetch = (
+const getStoreProducts = (
   url: string,
   setError: (error: string) => void,
   setIsLoaded: (isLoaded: boolean) => void,
@@ -19,4 +19,4 @@ const doFetch = (
   })();
 };
 
-export default doFetch;
+export default getStoreProducts;

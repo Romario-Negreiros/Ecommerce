@@ -1,3 +1,3 @@
 export default interface Props {
-    setFilter: (value: string) => void
+    setFilter: (value: string) => void,
 }

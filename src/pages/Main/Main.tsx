@@ -1,49 +1,51 @@
 import { FC, useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Home } from "../../components/index";
+import { Home, Cart } from "../../components/index";
 import { Header, Searcher } from "./components/index";
 import { Error, IsLoading } from "./styles";
-import Product from "./interfaces/FakeStoreRes";
-import doFetch from './modules/doFetch';
+import Product from "./interfaces/productsInterface";
+import getStoreProducts from "./modules/getStoreProducts";
 
 const Main: FC = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
-    doFetch("https://fakestoreapi.com/products", setError, setIsLoaded, setProducts);
+    getStoreProducts(
+      "https://fakestoreapi.com/products",
+      setError,
+      setIsLoaded,
+      setProducts
+    );
   }, []);
 
-  if(error) {
-    return (
-    <Error>
-      {error}
-    </Error>
-    )
+  if (error) {
+    return <Error>{error}</Error>;
   } else if (!isLoaded) {
-    return (
-    <IsLoading>
-      Loading...
-    </IsLoading>
-    )
+    return <IsLoading>Loading...</IsLoading>;
   } else {
-  return (
-    <Router>
-      <>
-        <Header />
-        <Searcher setFilter={setFilter} />
-        <Switch>
-          <Route exact path="/">
-            <Home products={products as Product[]} filter={filter} />
-          </Route>
-        </Switch>
-      </>
-    </Router>
-  );
+    return (
+      <Router>
+        <>
+          <Header />
+          <Switch>
+            <Route exact path="/">
+              <Searcher setFilter={setFilter} />
+              <Home
+                products={products as Product[]}
+                filter={filter}
+              />
+            </Route>
+            <Route path="/cart">
+              <Cart />
+            </Route>
+          </Switch>
+        </>
+      </Router>
+    );
   }
-  
 };
 
 export default Main;

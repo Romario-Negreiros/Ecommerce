@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import {
   Category,
   CategoryList,
@@ -20,25 +20,25 @@ const Searcher: FC<Props> = ({ setFilter }) => {
   return (
     <Container>
       <CategoryList>
-        <Category>
+        <Category onClick={() => setFilter('men\'s clothing')}>
           <Wrapper>
             <Icon src={Male} alt="male" />
           </Wrapper>
           <Legend>Male</Legend>
         </Category>
-        <Category>
+        <Category onClick={() => setFilter('electronics')}>
           <Wrapper>
             <Icon src={Laptop} alt="electronics" />
           </Wrapper>
           <Legend>Electronics</Legend>
         </Category>
-        <Category>
+        <Category onClick={() => setFilter('jewelery')}>
           <Wrapper>
             <Icon src={Gem} alt="jewelery" />
           </Wrapper>
           <Legend>Jewelery</Legend>
         </Category>
-        <Category>
+        <Category onClick={() => setFilter('women\'s clothing')}>
           <Wrapper>
             <Icon src={Female} alt="female" />
           </Wrapper>
@@ -48,6 +48,7 @@ const Searcher: FC<Props> = ({ setFilter }) => {
       <Input
         placeholder="Search for products"
         value={value}
+        onKeyPress={(event) => event.key === 'Enter' ? setFilter(event.currentTarget.value) : ''}
         onChange={(event) => setValue(event.currentTarget.value)}
       />
     </Container>

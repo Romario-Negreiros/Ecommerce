@@ -10,7 +10,6 @@ export const Container = styled.header`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${({theme: { common }}) => common.cyan};
   @media screen and (min-width: 350px) {
     flex-direction: row;
     height: 60px;
@@ -49,16 +48,16 @@ export const NavItem = styled.li`
 `;
 
 export const LinkTag = styled(Link)`
-  border-bottom: 4px solid transparent;
+  border-bottom: 2px solid transparent;
   transition: border 0.4s;
-  padding: 25px 15px;
+  padding: 17px 15px;
   @media screen and (min-width: 350px) {
     :hover {
       border-color: ${({ theme: { common } }) => common.cyan};
     }
   }
   @media screen and (min-width: 600px) {
-      padding: 22px 15px; 
+    padding: 15px;
   }
 `;
 
@@ -66,6 +65,6 @@ export const Icon = styled.img`
   width: 20px;
   object-fit: cover;
   @media screen and (min-width: 600px) {
-      width: 25px;
+    width: 25px;
   }
 `;
