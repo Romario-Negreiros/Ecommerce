@@ -3,6 +3,7 @@ const themes = {
         white: '#fff',
     },
     backgrounds: {
+        gray: '#666666',
         headerbg: '#20232a',
         underheader: '#282c34'
     },
