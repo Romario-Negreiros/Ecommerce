@@ -39,7 +39,7 @@ const Main: FC = () => {
               />
             </Route>
             <Route path="/cart">
-              <Cart />
+              <Cart products={products as Product[]}/>
             </Route>
           </Switch>
         </>

@@ -4,5 +4,8 @@ export default interface Product {
     price: number,
     category: string,
     description: string,
-    image: string
+    image: string,
+    quantity: number,
+    isSaved: boolean,
+    isOnCart: boolean
 }

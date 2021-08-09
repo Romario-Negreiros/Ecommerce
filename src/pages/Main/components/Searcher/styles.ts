@@ -55,7 +55,7 @@ export const Legend = styled.p`
   margin-top: 10px;
   font-size: 1rem;
   font-weight: 600;
-  color: ${({ theme: { fonts } }) => fonts.white};
+  color: #fff;
   @media screen and (min-width: 800px) {
       font-size: 1.2rem;
   }
@@ -66,6 +66,7 @@ export const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  font-weight: bold;
   border-radius: 2px;
   padding: 15px;
   border: 0 none;

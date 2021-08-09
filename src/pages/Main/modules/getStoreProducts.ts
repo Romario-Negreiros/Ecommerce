@@ -10,7 +10,10 @@ const getStoreProducts = (
     try {
       const response = await fetch(url);
       const toJSON = await response.json();
-      setProducts(toJSON);
+      const products = toJSON.map((product: Object) => {
+        return {...product, quantity: 0, isSaved: false, isOnCart: false}
+      })
+      setProducts(products)
     } catch (err) {
       setError(err.message);
     } finally {
