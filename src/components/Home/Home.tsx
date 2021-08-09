@@ -4,7 +4,7 @@ import {
   Products,
   Card,
   Image,
-  Name,
+  Title,
   Price,
   Category,
   Info,
@@ -18,10 +18,13 @@ import CartPlus from "../../assets/cartplus.svg";
 import Bookmark from "../../assets/bookmark.svg";
 // import Bookmarked from "../../assets/bookmarder.svg";
 import Props from "./interfaces/Props";
+import addItemOnCart from "./modules/addItemOnCart";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Home: FC<Props> = ({ products, filter }) => {
   return (
     <Container>
+      <ToastContainer />
       <Products>
         {products.map((product) => {
           const { title, id, price, description, category, image } = product;
@@ -37,7 +40,7 @@ const Home: FC<Props> = ({ products, filter }) => {
                   <LinkTag to="/">
                     <Image src={image} />
                     <Info>
-                      <Name>{title}</Name>
+                      <Title>{title}</Title>
                       <Price>$ {price}</Price>
                       <Category>
                         Category :{" "}
@@ -46,7 +49,7 @@ const Home: FC<Props> = ({ products, filter }) => {
                       </Category>
                     </Info>
                   </LinkTag>
-                  <Circle>
+                  <Circle onClick={() => toast('wowo so easy')}>
                     <CartIcon src={CartPlus} alt="add cart" />
                   </Circle>
                   <Circle>
@@ -61,7 +64,7 @@ const Home: FC<Props> = ({ products, filter }) => {
                 <LinkTag to="/">
                   <Image src={image} />
                   <Info>
-                    <Name>{title}</Name>
+                    <Title>{title}</Title>
                     <Price>$ {price}</Price>
                     <Category>
                       Category :{" "}
@@ -70,7 +73,7 @@ const Home: FC<Props> = ({ products, filter }) => {
                   </Info>
                 </LinkTag>
                 <Manage>
-                  <Circle>
+                  <Circle onClick={() => toast('Wow so easy')}>
                     <CartIcon src={CartPlus} alt="add cart" />
                   </Circle>
                   <Circle>

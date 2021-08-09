@@ -55,22 +55,19 @@ export const Info = styled.div`
   align-self: flex-start;
 `;
 
-export const Name = styled.h2`
-  color: #000;
+export const Title = styled.h2`
   font-weight: 900;
   font-size: 1.4rem;
   margin-bottom: 5px;
 `;
 
 export const Price = styled.p`
-  color: #000;
   font-weight: 800;
   font-size: 1.2rem;
   margin-bottom: 10px;
 `;
 
 export const Category = styled.p`
-  color: #000;
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 10px;
