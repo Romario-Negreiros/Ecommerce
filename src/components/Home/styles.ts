@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.section`
   padding: 10px;
@@ -80,11 +80,11 @@ export const LinkTag = styled(Link)`
   justify-content: center;
   :hover {
     opacity: 0.5;
-  } 
+  }
 `;
 
 export const Manage = styled.div`
-align-self: flex-end;
+  align-self: flex-end;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -95,7 +95,8 @@ export const Circle = styled.div`
   background: transparent;
   cursor: pointer;
   border-radius: 50%;
-  padding: 10px;
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
