@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import {
+  // Wrapper,
   Container,
   Products,
   Card,
@@ -13,6 +14,7 @@ import {
   Circle,
   BookMarkIcon,
   CartIcon,
+  // Error,
 } from './styles';
 import CartPlus from '../../assets/cartplus.svg';
 import Bookmark from '../../assets/bookmark.svg';
@@ -21,7 +23,8 @@ import Props from './interfaces/Props';
 import addItemOnCart from './modules/addItemOnCart';
 import { ToastContainer } from 'react-toastify';
 
-const Home: FC<Props> = ({ products, filter }) => {
+const Home: FC<Props> = ({ products, filter, setProductsOnCart }) => {
+
   return (
     <Container>
       <ToastContainer
@@ -61,7 +64,7 @@ const Home: FC<Props> = ({ products, filter }) => {
                     </Info>
                   </LinkTag>
                   <Manage>
-                    <Circle onClick={() => addItemOnCart(id)}>
+                    <Circle onClick={() => addItemOnCart(id, products, setProductsOnCart)}>
                       <CartIcon src={CartPlus} alt="add cart" />
                     </Circle>
                     <Circle>
@@ -70,7 +73,15 @@ const Home: FC<Props> = ({ products, filter }) => {
                   </Manage>
                 </Card>
               );
-            } else return null;
+            } else { return null
+              // return (
+              //   <Wrapper>
+              //     <Error>
+              //       Nothing was found!
+              //     </Error>
+              //   </Wrapper>
+              // ) 
+            };
           } else {
             return (
               <Card key={id}>
@@ -86,7 +97,7 @@ const Home: FC<Props> = ({ products, filter }) => {
                   </Info>
                 </LinkTag>
                 <Manage>
-                  <Circle onClick={() => addItemOnCart(id)}>
+                  <Circle onClick={() => addItemOnCart(id, products, setProductsOnCart)}>
                     <CartIcon src={CartPlus} alt="add cart" />
                   </Circle>
                   <Circle>

@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+export const Wrapper = styled.main`
+    background: ${({ theme: { backgrounds } }) => backgrounds.gray};
+    min-height: 100vh;
+    position: relative;
+`;
+
 export const Container = styled.section`
   padding: 10px;
   background: ${({ theme: { backgrounds } }) => backgrounds.gray};
@@ -113,4 +119,14 @@ export const CartIcon = styled.img`
 export const BookMarkIcon = styled.img`
   width: 25px;
   height: 25px;
+`;
+
+export const Error = styled.p`
+  font-size: 1.5rem;
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);
+  font-weight: bold;
 `;
