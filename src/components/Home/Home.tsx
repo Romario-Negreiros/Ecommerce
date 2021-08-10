@@ -26,6 +26,9 @@ const Home: FC<Props> = ({ products, filter }) => {
     <Container>
       <ToastContainer
         role="warning message"
+        position="top-center"
+        autoClose={2000}
+        closeButton={false}
         progressStyle={{ background: '#004cff' }}
         toastStyle={{
           background: '#8df37b',
@@ -57,12 +60,14 @@ const Home: FC<Props> = ({ products, filter }) => {
                       </Category>
                     </Info>
                   </LinkTag>
-                  <Circle onClick={() => addItemOnCart(id)}>
-                    <CartIcon src={CartPlus} alt="add cart" />
-                  </Circle>
-                  <Circle>
-                    <BookMarkIcon src={Bookmark} alt="save to favorites" />
-                  </Circle>
+                  <Manage>
+                    <Circle onClick={() => addItemOnCart(id)}>
+                      <CartIcon src={CartPlus} alt="add cart" />
+                    </Circle>
+                    <Circle>
+                      <BookMarkIcon src={Bookmark} alt="save to favorites" />
+                    </Circle>
+                  </Manage>
                 </Card>
               );
             } else return null;
