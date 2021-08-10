@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
   Container,
   Products,
@@ -13,20 +13,28 @@ import {
   Circle,
   BookMarkIcon,
   CartIcon,
-} from "./styles";
-import CartPlus from "../../assets/cartplus.svg";
-import Bookmark from "../../assets/bookmark.svg";
+} from './styles';
+import CartPlus from '../../assets/cartplus.svg';
+import Bookmark from '../../assets/bookmark.svg';
 // import Bookmarked from "../../assets/bookmarder.svg";
-import Props from "./interfaces/Props";
-import addItemOnCart from "./modules/addItemOnCart";
-import { ToastContainer, toast } from 'react-toastify';
+import Props from './interfaces/Props';
+import addItemOnCart from './modules/addItemOnCart';
+import { ToastContainer } from 'react-toastify';
 
 const Home: FC<Props> = ({ products, filter }) => {
   return (
     <Container>
-      <ToastContainer />
+      <ToastContainer
+        role="warning message"
+        progressStyle={{ background: '#004cff' }}
+        toastStyle={{
+          background: '#8df37b',
+          color: '#000',
+          fontWeight: 'bold',
+        }}
+      />
       <Products>
-        {products.map((product) => {
+        {products.map(product => {
           const { title, id, price, description, category, image } = product;
           if (filter) {
             const filterLC = filter.toLowerCase();
@@ -43,13 +51,13 @@ const Home: FC<Props> = ({ products, filter }) => {
                       <Title>{title}</Title>
                       <Price>$ {price}</Price>
                       <Category>
-                        Category :{" "}
+                        Category :{' '}
                         {category.charAt(0).toUpperCase() +
                           category.substring(1)}
                       </Category>
                     </Info>
                   </LinkTag>
-                  <Circle onClick={() => toast('wowo so easy')}>
+                  <Circle onClick={() => addItemOnCart(id)}>
                     <CartIcon src={CartPlus} alt="add cart" />
                   </Circle>
                   <Circle>
@@ -67,13 +75,13 @@ const Home: FC<Props> = ({ products, filter }) => {
                     <Title>{title}</Title>
                     <Price>$ {price}</Price>
                     <Category>
-                      Category :{" "}
+                      Category :{' '}
                       {category.charAt(0).toUpperCase() + category.substring(1)}
                     </Category>
                   </Info>
                 </LinkTag>
                 <Manage>
-                  <Circle onClick={() => toast('Wow so easy')}>
+                  <Circle onClick={() => addItemOnCart(id)}>
                     <CartIcon src={CartPlus} alt="add cart" />
                   </Circle>
                   <Circle>

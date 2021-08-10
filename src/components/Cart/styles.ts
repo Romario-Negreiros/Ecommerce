@@ -31,6 +31,11 @@ export const Summary = styled.div`
 
 export const Infos = styled.div``;
 
+export const SummaryTitle = styled.div`
+  font-weight: bold;
+  font-size: 1.4rem;
+`;
+
 export const SummaryItem = styled.p`
   font-weight: 700;
   font-size: 1.2rem;
