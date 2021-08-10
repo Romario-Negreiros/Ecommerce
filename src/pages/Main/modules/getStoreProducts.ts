@@ -1,4 +1,4 @@
-import Product from "../interfaces/productsInterface";
+import Product from '../interfaces/productsInterface';
 
 const getStoreProducts = (
   url: string,
@@ -11,9 +11,9 @@ const getStoreProducts = (
       const response = await fetch(url);
       const toJSON = await response.json();
       const products = toJSON.map((product: Object) => {
-        return {...product, quantity: 0, isSaved: false, isOnCart: false}
-      })
-      setProducts(products)
+        return { ...product, quantity: 1, isSaved: false, isOnCart: false };
+      });
+      setProducts(products);
     } catch (err) {
       setError(err.message);
     } finally {

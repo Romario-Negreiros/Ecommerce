@@ -1,20 +1,20 @@
-import { FC, useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Home, Cart } from "../../components/index";
-import { Header, Searcher } from "./components/index";
-import { Error, IsLoading } from "./styles";
-import Product from "./interfaces/productsInterface";
-import getStoreProducts from "./modules/getStoreProducts";
+import { FC, useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Home, Cart } from '../../components/index';
+import { Header, Searcher } from './components/index';
+import { Error, IsLoading } from './styles';
+import Product from './interfaces/productsInterface';
+import getStoreProducts from './modules/getStoreProducts';
 
 const Main: FC = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
     getStoreProducts(
-      "https://fakestoreapi.com/products",
+      'https://fakestoreapi.com/products',
       setError,
       setIsLoaded,
       setProducts
@@ -33,13 +33,10 @@ const Main: FC = () => {
           <Switch>
             <Route exact path="/">
               <Searcher setFilter={setFilter} />
-              <Home
-                products={products as Product[]}
-                filter={filter}
-              />
+              <Home products={products as Product[]} filter={filter} />
             </Route>
             <Route path="/cart">
-              <Cart products={products as Product[]}/>
+              <Cart products={products as Product[]} />
             </Route>
           </Switch>
         </>
