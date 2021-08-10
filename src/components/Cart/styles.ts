@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Wrapper = styled.main`
+    background: ${({ theme: { backgrounds } }) => backgrounds.gray};
+    min-height: 100vh;
+    position: relative;
+`;
+
 export const Container = styled.section`
   background: ${({ theme: { backgrounds } }) => backgrounds.gray};
   padding: 10px;
@@ -190,4 +196,14 @@ export const QuantityButton = styled.button`
   @media screen and (min-width: 250px) {
     font-size: 1.2rem;
   }
+`;
+
+export const Error = styled.p`
+  font-size: 1.5rem;
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);
+  font-weight: bold;
 `;
