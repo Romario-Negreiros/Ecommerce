@@ -59,6 +59,6 @@ That's a front end only ecommerce, being built with react, typescript and styled
 
 ### Author
 
-- Website - [Romario Negreiros](https://meu-portfolio-izui59udw-romario-negreiros.vercel.app)
+- Website - [Romario Negreiros](https://romario-negreiros.github.io/Romario-frontend/)
 - Frontend Mentor - [@Romario-Negreiros](https://www.frontendmentor.io/profile/Romario-Negreiros)
 - Github profile - [Romario-Negreiros](https://github.com/Romario-Negreiros)
