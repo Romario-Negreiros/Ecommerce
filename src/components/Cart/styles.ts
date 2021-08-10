@@ -175,7 +175,7 @@ export const ManagerButton = styled.button`
 `;
 
 export const QuantityButton = styled.button`
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-top: 10px;
   color: #000;
   cursor: pointer;
@@ -186,5 +186,8 @@ export const QuantityButton = styled.button`
   border: 0 none;
   :hover {
     opacity: 0.5;
+  }
+  @media screen and (min-width: 250px) {
+    font-size: 1.2rem;
   }
 `;
