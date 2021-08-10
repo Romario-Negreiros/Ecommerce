@@ -32,7 +32,7 @@ export const Title = styled.h1`
 `;
 
 export const Navigation = styled.nav`
-  margin-top: 15px;
+  margin-top: 25px;
   @media screen and (min-width: 350px) {
     margin: 0;
   }
@@ -51,6 +51,7 @@ export const LinkTag = styled(Link)`
   border-bottom: 2px solid transparent;
   transition: border 0.4s;
   padding: 17px 15px;
+  position: relative;
   @media screen and (min-width: 350px) {
     :hover {
       border-color: ${({ theme: { common } }) => common.cyan};
@@ -67,4 +68,30 @@ export const Icon = styled.img`
   @media screen and (min-width: 600px) {
     width: 25px;
   }
+`;
+
+export const Circle = styled.div`
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({theme: { common }}) => common.red };
+  border-radius: 50%;
+  @media screen and (min-width: 350px) {
+    width: 20px;
+    height: 20px;
+    top: 0px;
+    right: 0;
+  }
+`;
+
+export const Number = styled.span`
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: bolder;
+  display: block;
 `;

@@ -11,6 +11,9 @@ const Main: FC = () => {
   const [error, setError] = useState<string>('');
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('');
+  const [productsOnCart, setProductsOnCart] = useState<
+    Product[] | null
+  >();
 
   useEffect(() => {
     getStoreProducts(
@@ -29,14 +32,14 @@ const Main: FC = () => {
     return (
       <Router>
         <>
-          <Header />
+          <Header productsOnCart={productsOnCart as Product[] | null} />
           <Switch>
             <Route exact path="/">
               <Searcher setFilter={setFilter} />
-              <Home products={products as Product[]} filter={filter} />
+              <Home products={products as Product[]} filter={filter} setProductsOnCart={setProductsOnCart} />
             </Route>
             <Route path="/cart">
-              <Cart products={products as Product[]} />
+              <Cart productsOnCart={productsOnCart as Product[] | null} setProductsOnCart={setProductsOnCart} />
             </Route>
           </Switch>
         </>
