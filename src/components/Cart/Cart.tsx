@@ -22,6 +22,9 @@ import {
   QuantityButton,
 } from './styles';
 import { ToastContainer } from 'react-toastify';
+import removeItemFromCart from './modules/removeItemFromCart';
+import removeAllItemsFromCart from './modules/removeAllItemsFromCart';
+import manageItemQuantity from './modules/manageItemQuantity';
 
 const Cart: FC<Props> = ({ products }) => {
   const [productsOnCart, setProductsOnCart] = useState<
@@ -38,21 +41,41 @@ const Cart: FC<Props> = ({ products }) => {
       );
       setProductsOnCart(getCartItems);
     } else setProductsOnCart(null);
-  }, [products, localStorage.getItem('cartItemsID')]);
+  }, [products]);
 
   if (productsOnCart !== null) {
-    const getTotalPrice = productsOnCart?.reduce((a, product) => a + product.quantity * product.price, 0)
-    const getTotalNumberOfItems = productsOnCart?.reduce((a, product) => a + product.quantity, 0)
+    const getTotalPrice = productsOnCart?.reduce(
+      (a, product) => a + product.quantity * product.price,
+      0
+    );
+    const getTotalNumberOfItems = productsOnCart?.reduce(
+      (a, product) => a + product.quantity,
+      0
+    );
     return (
       <Container>
+        <ToastContainer
+          role="warning message"
+          position = "top-center"
+          autoClose = {2000}
+          closeButton = {false}
+          progressStyle={{ background: '#004cff' }}
+          toastStyle={{
+            background: '#e4072c',
+            color: '#fff',
+            fontWeight: 'bold',
+          }}
+        />
         <Summary>
           <Infos>
             <SummaryTitle>Summary</SummaryTitle>
-            <SummaryItem>Total price: ${getTotalPrice?.toFixed(2)} </SummaryItem>
+            <SummaryItem>
+              Total price: ${getTotalPrice?.toFixed(2)}{' '}
+            </SummaryItem>
             <SummaryItem>Total items: {getTotalNumberOfItems}</SummaryItem>
           </Infos>
           <Options>
-            <SummaryButton>Delete all</SummaryButton>
+            <SummaryButton onClick={() => removeAllItemsFromCart(setProductsOnCart)}>Delete all</SummaryButton>
             <LinkTag to="/checkout" style={{ background: '#2bdc0a' }}>
               Checkout
             </LinkTag>
@@ -73,11 +96,16 @@ const Cart: FC<Props> = ({ products }) => {
                   <Quantity>Quantity : {quantity}</Quantity>
                 </ItemInfo>
                 <ManageItem>
-                  <ManagerButton style={{ background: '#f70029' }}>
+                  <ManagerButton
+                    onClick={() =>
+                      removeItemFromCart(id, setProductsOnCart, productsOnCart)
+                    }
+                    style={{ background: '#f70029' }}
+                  >
                     Delete
                   </ManagerButton>
-                  <QuantityButton>More one</QuantityButton>
-                  <QuantityButton>Less one</QuantityButton>
+                  <QuantityButton data-action="more" onClick={event => manageItemQuantity(event, id, productsOnCart, setProductsOnCart)}>More one</QuantityButton>
+                  <QuantityButton data-action="less" onClick={event => manageItemQuantity(event, id, productsOnCart, setProductsOnCart)}>Less one</QuantityButton>
                 </ManageItem>
               </CartItem>
             );
@@ -86,9 +114,7 @@ const Cart: FC<Props> = ({ products }) => {
       </Container>
     );
   } else {
-    return (
-      <p>the cart is empty asshole</p>
-    )
+    return <p>the cart is empty asshole</p>;
   }
 };
 
