@@ -1,26 +1,27 @@
 import { FC, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Cart } from '../../components/index';
+import { Home, Cart, Checkout } from '../../components/index';
 import { Header, Searcher } from './components/index';
 import { Error, IsLoading } from './styles';
 import Product from './interfaces/productsInterface';
 import getStoreProducts from './modules/getStoreProducts';
 
 const Main: FC = () => {
+  
   const [products, setProducts] = useState<Product[] | null>(null);
+  const [productsOnCart, setProductsOnCart] = useState<Product[] | null>();
+
   const [error, setError] = useState<string>('');
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('');
-  const [productsOnCart, setProductsOnCart] = useState<
-    Product[] | null
-  >();
 
   useEffect(() => {
     getStoreProducts(
       'https://fakestoreapi.com/products',
       setError,
       setIsLoaded,
-      setProducts
+      setProducts,
+      setProductsOnCart
     );
   }, []);
 
@@ -40,6 +41,9 @@ const Main: FC = () => {
             </Route>
             <Route path="/cart">
               <Cart productsOnCart={productsOnCart as Product[] | null} setProductsOnCart={setProductsOnCart} />
+            </Route>
+            <Route path="/checkout">
+              <Checkout productsOnCart={productsOnCart as Product[] | null} />
             </Route>
           </Switch>
         </>
