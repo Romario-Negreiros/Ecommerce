@@ -10,7 +10,7 @@ export const Container = styled.header`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  @media screen and (min-width: 350px) {
+  @media screen and (min-width: 400px) {
     flex-direction: row;
     height: 60px;
     padding: 10px 25px;
@@ -33,7 +33,7 @@ export const Title = styled.h1`
 
 export const Navigation = styled.nav`
   margin-top: 25px;
-  @media screen and (min-width: 350px) {
+  @media screen and (min-width: 400px) {
     margin: 0;
   }
 `;
@@ -52,13 +52,14 @@ export const LinkTag = styled(Link)`
   transition: border 0.4s;
   padding: 17px 15px;
   position: relative;
-  @media screen and (min-width: 350px) {
+  @media screen and (min-width: 400px) {
+    padding: 16px 20px;
     :hover {
       border-color: ${({ theme: { common } }) => common.cyan};
     }
   }
   @media screen and (min-width: 600px) {
-    padding: 15px;
+    padding: 13px 20px;
   }
 `;
 
@@ -81,11 +82,14 @@ export const Circle = styled.div`
   align-items: center;
   background: ${({theme: { common }}) => common.red };
   border-radius: 50%;
-  @media screen and (min-width: 350px) {
+  @media screen and (min-width: 400px) {
     width: 20px;
     height: 20px;
     top: 0px;
     right: 0;
+  }
+  @media screen and (min-width: 600px) {
+    top: -8px;
   }
 `;
 

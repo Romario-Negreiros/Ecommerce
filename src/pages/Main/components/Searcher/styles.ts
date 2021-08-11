@@ -64,7 +64,6 @@ export const Legend = styled.p`
 export const Input = styled.input`
   margin-top: 20px;
   width: 100%;
-  box-sizing: border-box;
   text-align: center;
   font-weight: bold;
   border-radius: 2px;

@@ -2,6 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import Props from './interfaces/Props';
 import Home from '../../../../assets/home.svg';
 import Cart from '../../../../assets/cart.svg';
+import Checkout from '../../../../assets/checkout.svg';
 import {
   Container,
   Icon,
@@ -36,10 +37,17 @@ const Header: FC<Props> = ({ productsOnCart }) => {
             </LinkTag>
             <LinkTag to="/cart">
               <Icon src={Cart} />
+              {numberOfItemsOnCart > 0 ?
               <Circle>
                 <Number>{numberOfItemsOnCart}</Number>
               </Circle>
+              : ''}
             </LinkTag>
+            {numberOfItemsOnCart > 0 ?
+            <LinkTag to="/checkout">
+              <Icon src={Checkout} />
+            </LinkTag>
+            : ''}
           </NavItem>
         </NavList>
       </Navigation>
