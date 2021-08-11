@@ -16,42 +16,40 @@ export const Container = styled.section`
 `;
 
 export const Products = styled.ul`
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 1fr;
+  @media screen and (min-width: 500px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media screen and (min-width: 850px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (min-width: 1250px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 export const Card = styled.li`
-  flex-basis: 100%;
   padding: 10px;
   background: #fff;
   display: flex;
   flex-flow: row wrap;
-  margin-top: 30px;
+  margin-top: 15px;
   border-radius: 2px;
   @media screen and (min-width: 500px) {
-    margin-bottom: 30px;
-    margin-top: 0;
-    flex-basis: 40%;
-    align-self: stretch;
-  }
-  @media screen and (min-width: 800px) {
-    flex-basis: 30%;
-  }
-  @media screen and (min-width: 1300px) {
-    flex-basis: 23%;
+    margin: 10px;
   }
 `;
 
 export const Image = styled.img`
   width: 80%;
   margin-bottom: 30px;
-  object-fit: contain;
+  height: 200px;
   @media screen and (min-width: 400px) {
     width: 60%;
   }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 500px) {
+    width: 90%;
     height: 250px;
   }
 `;
