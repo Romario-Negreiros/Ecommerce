@@ -16,6 +16,7 @@ That's a front end only ecommerce, being built with react, typescript and styled
 * Styled components
 * React router dom
 * React toastify
+* React hooks form
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -27,12 +28,13 @@ That's a front end only ecommerce, being built with react, typescript and styled
 ##### Progress
 - [x] Start the project.
 - [x] Start creating components styles.
-- [ ] Header component with cart icon that shows items quantity in the cart.
+- [x] Header component with cart icon that shows items quantity in the cart.
 - [x] Store cart items in local storage, so that the user doesn't lost their items when closes the browser.
 - [x] Manage quantity o a single item on cart
 - [x] Filter products list not only by filter worlds, but also clicking in a category.
 - [ ] Checkout form with validations.
-- [ ] Modal with shipping summary.
+- [x] Modal with shipping summary.
+- [ ] Checkout component with Material UI for a better looking form
 - [ ] Create avaliations field on detailed page for every product.
 - [ ] Keep track of user's shipping historic, and create a dashboard to see it
 
