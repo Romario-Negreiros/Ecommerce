@@ -57,6 +57,7 @@ export const SummaryButton = styled.button`
   cursor: pointer;
   transition: opacity 0.4s;
   border: 0 none;
+  border-radius: 2px;
   :hover {
     opacity: 0.5;
   }
@@ -174,6 +175,7 @@ export const ManagerButton = styled.button`
   padding: 10px 15px;
   background: ${({ theme: { common } }) => common.cyan};
   transition: opacity 0.4s;
+  border-radius: 2px;
   border: 0 none;
   :hover {
     opacity: 0.5;
@@ -187,6 +189,7 @@ export const QuantityButton = styled.button`
   cursor: pointer;
   width: 48%;
   padding: 10px 15px;
+  border-radius: 2px;
   background: ${({ theme: { common } }) => common.cyan};
   transition: opacity 0.4s;
   border: 0 none;
