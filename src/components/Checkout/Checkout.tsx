@@ -11,7 +11,7 @@ import {
   Error,
 } from './styles';
 import { Portal, Modal } from './components/index';
-import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Props from './interfaces/Props';
 
 type Inputs = {
