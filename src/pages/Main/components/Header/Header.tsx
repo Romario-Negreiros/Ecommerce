@@ -37,17 +37,13 @@ const Header: FC<Props> = ({ productsOnCart }) => {
             </LinkTag>
             <LinkTag to="/cart">
               <Icon src={Cart} />
-              {numberOfItemsOnCart > 0 ?
               <Circle>
                 <Number>{numberOfItemsOnCart}</Number>
               </Circle>
-              : ''}
             </LinkTag>
-            {numberOfItemsOnCart > 0 ?
             <LinkTag to="/checkout">
               <Icon src={Checkout} />
             </LinkTag>
-            : ''}
           </NavItem>
         </NavList>
       </Navigation>
