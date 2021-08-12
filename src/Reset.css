@@ -5,6 +5,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+body {
+  background: #666666;
+}
+
 button {
   font-weight: bold;
 }
