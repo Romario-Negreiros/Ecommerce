@@ -2,14 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Wrapper = styled.main`
-    background: ${({ theme: { backgrounds } }) => backgrounds.gray};
     min-height: 100vh;
     position: relative;
 `;
 
 export const Container = styled.section`
   padding: 10px;
-  background: ${({ theme: { backgrounds } }) => backgrounds.gray};
   @media screen and (min-width: 500px) {
     padding: 25px 10px;
   }
@@ -114,6 +112,7 @@ export const CartIcon = styled.img`
   height: 25px;
   transform: translate(-2px, 1px);
 `;
+
 export const BookMarkIcon = styled.img`
   width: 25px;
   height: 25px;
