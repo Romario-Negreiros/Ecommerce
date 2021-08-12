@@ -2,13 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled.main`
-    background: ${({ theme: { backgrounds } }) => backgrounds.gray};
     min-height: 100vh;
     position: relative;
 `;
 
 export const Container = styled.section`
-  background: ${({ theme: { backgrounds } }) => backgrounds.gray};
   padding: 10px;
   display: flex;
   flex-direction: column;
