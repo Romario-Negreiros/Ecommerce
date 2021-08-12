@@ -7,28 +7,7 @@ export const Container = styled.section`
   top: 0;
   left: 0;
   z-index: 5;
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f0f9ff+0,cbebff+47,a1dbff+100;Blue+3D+%2313 */
-  background: #f0f9ff; /* Old browsers */
-  background: -moz-linear-gradient(
-    top,
-    #f0f9ff 0%,
-    #cbebff 47%,
-    #a1dbff 100%
-  ); /* FF3.6-15 */
-  background: -webkit-linear-gradient(
-    top,
-    #f0f9ff 0%,
-    #cbebff 47%,
-    #a1dbff 100%
-  ); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    #f0f9ff 0%,
-    #cbebff 47%,
-    #a1dbff 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#a1dbff',GradientType=0 ); /* IE6-9 */
-  backdrop-filter: opacity(0.5);
+  background: rgba(125, 125, 125, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,5 +62,6 @@ text-align: center;
 `;
 
 export const Message = styled.p`
-  color: #fff;
+  color: ${({theme: { common }}) => common.cyan };
+  font-weight: bold;
 `;

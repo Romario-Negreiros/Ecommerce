@@ -17,17 +17,24 @@ import Props from './interfaces/Props';
 type Inputs = {
   country: string;
   city: string;
-  zipcode: number;
+  zipcode: string;
+  paymentmethod: string
 };
 
 const Checkout: FC<Props> = ({ productsOnCart }) => {
+
   const [showModal, setShowModal] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = () => setShowModal(true);
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    setShowModal(true)
+    reset({country: '', city: '', zipcode: '', paymentmethod: ''})
+  };
+
 
   if (productsOnCart?.length) {
     const getTotalPrice = productsOnCart.reduce(
@@ -84,11 +91,14 @@ const Checkout: FC<Props> = ({ productsOnCart }) => {
               {errors.zipcode && <p>{errors.zipcode.message}</p>}
             </InputWrapper>
           </Fieldset>
-          {/* <Fieldset>
+          <Fieldset>
+            <Legend>Payment info</Legend>
                 <InputWrapper>
-
+                  <InputLabel htmlFor="paymentmethod">Payment method</InputLabel>
+                  <Input aria-placeholder='Payment method' {...register('paymentmethod', { required: 'You must choose a payment method' })} />  
+                  {errors.paymentmethod && <p>{errors.paymentmethod.message}</p>}     
                 </InputWrapper>
-            </Fieldset> */}
+            </Fieldset>
           <Button type="submit">Confirm and pay</Button>
         </Form>
       </Wrapper>
