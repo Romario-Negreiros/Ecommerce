@@ -4,6 +4,9 @@ That's a front end only ecommerce, being built with react, typescript and styled
 
 -----------------------------------------------------------------------------------------------------------------------------
 
+## Status
+* FakeStore API which is the one i'm using to fetch the products, is currently downed.
+
 #### Brief
 * Every route will have a header component
 * Main page contains a searcher, to filter the products' list, and also the product's list
@@ -17,6 +20,9 @@ That's a front end only ecommerce, being built with react, typescript and styled
 * React router dom
 * React toastify
 * React hooks form
+* Material UI
+* Stripe
+* Commerce JS ( soon )
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -37,6 +43,7 @@ That's a front end only ecommerce, being built with react, typescript and styled
 - [ ] Checkout component with Material UI for a better looking form
 - [ ] Create avaliations field on detailed page for every product.
 - [ ] Keep track of user's shipping historic, and create a dashboard to see it
+- [ ] Integrate with stripe and commercejs to simulate a complete experience without backend
 
 -----------------------------------------------------------------------------------------------------------------------------
 
