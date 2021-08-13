@@ -1,115 +1,82 @@
 import { FC, useState } from 'react';
 import {
-  Wrapper,
-  Form,
-  InputWrapper,
-  Input,
-  InputLabel,
-  Fieldset,
-  Legend,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Typography,
+  CircularProgress,
+  Divider,
   Button,
-  Error,
-} from './styles';
-import { Portal, Modal } from './components/index';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import Props from './interfaces/Props';
+} from '@material-ui/core';
+import { StepLabelText } from './styled';
+import useStyles from './styles';
+import PaymentForm from './components/PaymentForm';
+import ShippingForm from './components/ShippingForm';
+import Props from './interfaces/CheckoutReviewProps';
+import Inputs from './interfaces/Inputs';
+import { Link } from 'react-router-dom';
 
-type Inputs = {
-  country: string;
-  city: string;
-  zipcode: string;
-  paymentmethod: string
-};
+const steps = ['Shipping address', 'Payment details'];
 
-const Checkout: FC<Props> = ({ productsOnCart }) => {
+const Checkbig: FC<Props> = ({ productsOnCart }) => {
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const [shippingData, setShippingData] = useState<Inputs>();
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = () => {
-    setShowModal(true)
-    reset({country: '', city: '', zipcode: '', paymentmethod: ''})
+  const Confirmation = () => {
+    return (
+      <>
+        <div>
+          <Typography variant="h5">Thank you for your purchase, firstname lastname</Typography>
+          <Divider className={classes.divider} />
+          <Typography variant="subtitle2">Order ref: ref</Typography>
+        </div>
+        <br />
+        <Button component={Link} to="/" variant="outlined" className={classes.button}>Back to home</Button>
+      </>
+    );
   };
 
+  const nextStep = () =>
+    setActiveStep(previousActiveStep => previousActiveStep + 1);
+  const backStep = () =>
+    setActiveStep(previousActiveStep => previousActiveStep - 1);
 
-  if (productsOnCart?.length) {
-    const getTotalPrice = productsOnCart.reduce(
-      (a, product) => a + product.price * product.quantity,
-      0
-    );
-    const getTotalItems = productsOnCart.reduce(
-      (a, product) => a + product.quantity,
-      0
-    );
-    return (
-      <Wrapper>
-        {showModal && (
-          <Portal>
-            <Modal
-              setShowModal={setShowModal}
-              totalPrice={getTotalPrice}
-              totalItems={getTotalItems}
-            />
-          </Portal>
-        )}
+  const next = (data: Inputs) => {
+    setShippingData(data);
 
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
-            <Legend>Shipping info</Legend>
-            <InputWrapper>
-              <InputLabel htmlFor="country">Country</InputLabel>
-              <Input
-                aria-placeholder="Country"
-                {...register('country', { required: 'City field is required' })}
-              />
-              {errors.country && <p>{errors.country.message}</p>}
-            </InputWrapper>
-            <InputWrapper>
-              <InputLabel htmlFor="city">City</InputLabel>
-              <Input
-                aria-placeholder="City"
-                {...register('city', { required: 'Country field is required' })}
-              />
-              {errors.city && <p>{errors.city.message}</p>}
-            </InputWrapper>
-            <InputWrapper>
-              <InputLabel htmlFor="zipcode">Zip code</InputLabel>
-              <Input
-                aria-placeholder="Zip code"
-                {...register('zipcode', {
-                  required: 'Zip code field is required',
-                  pattern: {
-                    value: /^[0-9]{5}[-]{1}[0-9]{3,4}$/,
-                    message: 'Invalid format',
-                  },
-                })}
-              />
-              {errors.zipcode && <p>{errors.zipcode.message}</p>}
-            </InputWrapper>
-          </Fieldset>
-          <Fieldset>
-            <Legend>Payment info</Legend>
-                <InputWrapper>
-                  <InputLabel htmlFor="paymentmethod">Payment method</InputLabel>
-                  <Input aria-placeholder='Payment method' {...register('paymentmethod', { required: 'You must choose a payment method' })} />  
-                  {errors.paymentmethod && <p>{errors.paymentmethod.message}</p>}     
-                </InputWrapper>
-            </Fieldset>
-          <Button type="submit">Confirm and pay</Button>
-        </Form>
-      </Wrapper>
+    nextStep();
+  };
+
+  const FormToShow = () =>
+    activeStep === 0 ? (
+      <ShippingForm next={next} />
+    ) : (
+      <PaymentForm shippingData={shippingData as Inputs} productsOnCart={productsOnCart} backStep={backStep} nextStep={nextStep} />
     );
-  } else {
-    return (
-      <Wrapper>
-        <Error>Your cart is empty!</Error>
-      </Wrapper>
-    );
-  }
+
+  return (
+    <>
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Typography variant="h3" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map(step => (
+              <Step key={step}>
+                <StepLabel>
+                  <StepLabelText>{step}</StepLabelText>
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === steps.length ? <Confirmation /> : <FormToShow />}
+        </Paper>
+      </main>
+    </>
+  );
 };
 
-export default Checkout;
+export default Checkbig;
