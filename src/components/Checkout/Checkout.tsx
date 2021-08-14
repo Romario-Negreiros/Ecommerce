@@ -16,13 +16,34 @@ import ShippingForm from './components/ShippingForm';
 import Props from './interfaces/CheckoutReviewProps';
 import Inputs from './interfaces/Inputs';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { commerce } from '../../lib/commerce';
+import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkbig: FC<Props> = ({ productsOnCart }) => {
+const Checkout: FC<Props> = ({ cart }) => {
+
+  const { line_items } = cart;
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
   const [shippingData, setShippingData] = useState<Inputs>();
+  const [checkoutToken, setCheckoutToken] = useState<CheckoutToken>();
+
+  useEffect(() => {
+      const generateToken = async () => {
+        try {
+
+          const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
+          setCheckoutToken(token);
+
+        } catch(err) {
+
+        }
+      }
+
+      generateToken();
+  }, [cart])
 
   const Confirmation = () => {
     return (
@@ -51,11 +72,13 @@ const Checkbig: FC<Props> = ({ productsOnCart }) => {
 
   const FormToShow = () =>
     activeStep === 0 ? (
-      <ShippingForm next={next} />
+      <ShippingForm next={next} checkoutToken={checkoutToken as CheckoutToken} />
     ) : (
-      <PaymentForm shippingData={shippingData as Inputs} productsOnCart={productsOnCart} backStep={backStep} nextStep={nextStep} />
+      <PaymentForm shippingData={shippingData as Inputs} cart={cart} backStep={backStep} nextStep={nextStep} />
     );
 
+  
+  if(line_items.length) {
   return (
     <>
       <main className={classes.layout}>
@@ -72,11 +95,18 @@ const Checkbig: FC<Props> = ({ productsOnCart }) => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? <Confirmation /> : <FormToShow />}
+          {activeStep === steps.length ? <Confirmation /> : checkoutToken && <FormToShow />}
         </Paper>
       </main>
     </>
   );
+            } else {
+              return (
+                <div>
+                  <h1>Your cart is empty</h1>
+                </div>
+              )
+            }
 };
 
-export default Checkbig;
+export default Checkout;

@@ -13,7 +13,7 @@ const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLIC_KEY as string
 );
 
-const PaymentForm: FC<Props> = ({ shippingData, productsOnCart, backStep, nextStep }) => {
+const PaymentForm: FC<Props> = ({ shippingData, cart, backStep, nextStep }) => {
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     elements: any,
@@ -58,7 +58,7 @@ const PaymentForm: FC<Props> = ({ shippingData, productsOnCart, backStep, nextSt
 
   return (
     <>
-      <Review productsOnCart={productsOnCart} />
+      <Review cart={cart} />
       <Divider />
       <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
         Payment Method

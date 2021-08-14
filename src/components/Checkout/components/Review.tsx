@@ -2,35 +2,32 @@ import { FC } from 'react';
 import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
 import Props from '../interfaces/CheckoutReviewProps';
 
-const Review: FC<Props> = ({ productsOnCart }) => {
-  if (productsOnCart?.length) {
-      const getTotalPrice: number = productsOnCart.reduce((a, product) => a + product.quantity * product.price, 0);
+const Review: FC<Props> = ({ cart }) => {
+
     return (
       <>
         <Typography variant="h6" gutterBottom>
           Order summary
         </Typography>
         <List disablePadding>
-          {productsOnCart?.map(product => (
+          {cart.line_items.map(product => (
             <ListItem key={product.id} style={{ padding: '10px 0'}}>
-                <ListItemText primary={product.title} secondary={`Quantity: ${product.quantity}`} />
+                <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
                 <Typography variant="body2">
-                    $ {(product.quantity * product.price).toFixed(2)}
+                   {product.line_total.formatted_with_symbol}
                 </Typography>
             </ListItem>
           ))}
           <ListItem style={{padding: '10px 0'}}>
               <ListItemText primary="Total" />
               <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-                  $ {getTotalPrice.toFixed(2)}
+                  {cart.subtotal.formatted_with_symbol}
               </Typography>
           </ListItem>
         </List>
       </>
     );
-  } else {
-    return <div>Empty</div>;
-  }
+
 };
 
 export default Review;
