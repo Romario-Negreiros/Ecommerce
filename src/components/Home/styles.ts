@@ -58,19 +58,16 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.h2`
-  font-weight: 900;
   font-size: 1.4rem;
   margin-bottom: 5px;
 `;
 
 export const Price = styled.p`
-  font-weight: 800;
   font-size: 1.2rem;
   margin-bottom: 10px;
 `;
 
 export const Category = styled.p`
-  font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 10px;
 `;
@@ -125,5 +122,4 @@ export const Error = styled.p`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -100%);
-  font-weight: bold;
 `;

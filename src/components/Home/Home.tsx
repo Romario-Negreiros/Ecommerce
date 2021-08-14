@@ -18,39 +18,40 @@ import {
 } from './styles';
 import CartPlus from '../../assets/cartplus.svg';
 import Bookmark from '../../assets/bookmark.svg';
-// import Bookmarked from "../../assets/bookmarder.svg";
+// import Bookmarked from '../../assets/bookmarder.svg';
 import Props from './interfaces/Props';
 import addItemOnCart from './modules/addItemOnCart';
 import { ToastContainer } from 'react-toastify';
 
-const Home: FC<Props> = ({ products, filter, setProductsOnCart }) => {
+const Home: FC<Props> = ({ products, filter, setCart }) => {
   const getOutput: JSX.Element[] = [];
-
   products.forEach(product => {
-    const { title, id, price, description, category, image } = product;
     if (filter) {
       const filterLC = filter.toLowerCase();
       if (
-        title.toLowerCase().includes(filterLC) ||
-        description.toLowerCase().includes(filterLC) ||
-        category.toLowerCase() === filterLC
+        product.name.toLowerCase().includes(filterLC) ||
+        product.description.toLowerCase().includes(filterLC) ||
+        product.categories[0].name.toLowerCase() === filterLC
       ) {
         getOutput.push(
-          <Card key={id}>
-            <LinkTag to={{ pathname: '/products/' + id, state: id }}>
-              <Image src={image} />
+          <Card key={product.id}>
+            <LinkTag
+              to={{ pathname: '/products/' + product.id, state: product.id }}
+            >
+              <Image src={product.assets[0].url} />
               <Info>
-                <Title>{title}</Title>
-                <Price>$ {price}</Price>
+                <Title>{product.name}</Title>
+                <Price>{product.price.formatted_with_symbol}</Price>
                 <Category>
                   Category :{' '}
-                  {category.charAt(0).toUpperCase() + category.substring(1)}
+                  {product.categories[0].name.charAt(0).toUpperCase() +
+                    product.categories[0].name.substring(1)}
                 </Category>
               </Info>
             </LinkTag>
             <Manage>
               <Circle
-                onClick={() => addItemOnCart(id, products, setProductsOnCart)}
+                onClick={() => addItemOnCart(product.id, 1, setCart)}
               >
                 <CartIcon src={CartPlus} alt="add cart" />
               </Circle>
@@ -63,21 +64,24 @@ const Home: FC<Props> = ({ products, filter, setProductsOnCart }) => {
       }
     } else {
       getOutput.push(
-        <Card key={id}>
-          <LinkTag to={{ pathname: '/products/' + id, state: id }}>
-            <Image src={image} />
+        <Card key={product.id}>
+          <LinkTag
+            to={{ pathname: '/products/' + product.id, state: product.id }}
+          >
+            <Image src={product.assets[0].url} />
             <Info>
-              <Title>{title}</Title>
-              <Price>$ {price}</Price>
+              <Title>{product.name}</Title>
+              <Price>{product.price.formatted_with_symbol}</Price>
               <Category>
                 Category :{' '}
-                {category.charAt(0).toUpperCase() + category.substring(1)}
+                {product.categories[0].name.charAt(0).toUpperCase() +
+                  product.categories[0].name.substring(1)}
               </Category>
             </Info>
           </LinkTag>
           <Manage>
             <Circle
-              onClick={() => addItemOnCart(id, products, setProductsOnCart)}
+              onClick={() => addItemOnCart(product.id, 1, setCart)}
             >
               <CartIcon src={CartPlus} alt="add cart" />
             </Circle>
