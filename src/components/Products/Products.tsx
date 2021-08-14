@@ -16,7 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import CartPlus from '../../assets/cartplus.svg';
 import addItemOnCart from './modules/addItemOnCart';
 
-const Products: FC<Props> = ({ products, setProductsOnCart }) => {
+const Products: FC<Props> = ({ products, setCart }) => {
   const { state } = useLocation();
   const getProductToShow = products.find(product => product.id === state);
 
@@ -37,20 +37,20 @@ const Products: FC<Props> = ({ products, setProductsOnCart }) => {
         />
         <OuterContainer>
           <InnerContainer>
-            <Image src={getProductToShow.image} />
-            <Title>{getProductToShow.title}</Title>
+            <Image src={getProductToShow.assets[0].url} />
+            <Title>{getProductToShow.name}</Title>
           </InnerContainer>
           <InnerContainer>
-            <TextContent>{getProductToShow.description}</TextContent>
-            <TextContent>Category: {getProductToShow.category}</TextContent>
-            <TextContent>$ {getProductToShow.price}</TextContent>
+            <TextContent>{getProductToShow.description.replace('</p>', '').slice(3)}</TextContent>
+            <TextContent>Category: {getProductToShow.categories[0].name}</TextContent>
+            <TextContent>{getProductToShow.price.formatted_with_symbol}</TextContent>
             <Manage>
               <Circle
                 onClick={() =>
                   addItemOnCart(
                     getProductToShow.id,
-                    products,
-                    setProductsOnCart
+                    1,
+                    setCart
                   )
                 }
               >

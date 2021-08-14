@@ -71,7 +71,6 @@ export const Image = styled.img`
 
 export const TextContent = styled.p`
     font-size: 1.2rem;
-    font-weight: 700;
     margin-top: 15px;
     line-height: 25px;
     @media screen and (min-width: 750px) {
@@ -87,7 +86,6 @@ export const Manage = styled.div`
 export const Title = styled.h2`
     font-size: 1.4rem;
     line-height: 25px;
-    font-weight: bolder;
     @media screen and (min-width: 750px) {
       width: 100%;
       text-align: center;

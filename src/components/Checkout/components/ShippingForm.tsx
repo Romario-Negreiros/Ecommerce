@@ -94,7 +94,7 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Country</InputLabel>
               <Select
-                value={shippingCountry}
+                value={shippingCountry} 
                 fullWidth
                 onChange={(
                   event: React.ChangeEvent<{
