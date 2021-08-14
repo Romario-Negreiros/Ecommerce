@@ -5,13 +5,15 @@ That's a front end only ecommerce, being built with react, typescript and styled
 -----------------------------------------------------------------------------------------------------------------------------
 
 ## Status
-* FakeStore API which is the one i'm using to fetch the products, is currently downed.
+Integrating with the commerce.js library, which allows me to have a full ecommerce management, such as cart methods, checkout and also login and logout of clients without needing a backend.
 
 #### Brief
-* Every route will have a header component
-* Main page contains a searcher, to filter the products' list, and also the product's list
-* Users will be able to see pages dedicated to each product, add and remove items to the cart, also edit items quantity.
-* There will be a checkout component, where the fields can be filled in and validated. If it validates, users will be able to see a modal containing information about the shipping.
+* Users will be able to login
+* See a historic of their orderers
+* See their cart items even when the browser has been closed
+* Fill in all the fields on checkout and go ahead to conclude 'pay' and conclude the order
+* The products list will be filterable
+* Each product has its own dedicated page with more detailed informations
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -22,7 +24,7 @@ That's a front end only ecommerce, being built with react, typescript and styled
 * React hooks form
 * Material UI
 * Stripe
-* Commerce JS ( soon )
+* Commerce JS 
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -35,12 +37,12 @@ That's a front end only ecommerce, being built with react, typescript and styled
 - [x] Start the project.
 - [x] Start creating components styles.
 - [x] Header component with cart icon that shows items quantity in the cart.
-- [x] Store cart items in local storage, so that the user doesn't lost their items when closes the browser.
-- [x] Manage quantity o a single item on cart
+- [x] Manage quantity of a single item on cart
 - [x] Filter products list not only by filter worlds, but also clicking in a category.
-- [ ] Checkout form with validations.
+- [x] Checkout form with validations.
 - [x] Modal with shipping summary.
-- [ ] Checkout component with Material UI for a better looking form
+- [x] Checkout component with Material UI for a better looking form
+- [ ] Create a login form along with the commercejs library
 - [ ] Create avaliations field on detailed page for every product.
 - [ ] Keep track of user's shipping historic, and create a dashboard to see it
 - [ ] Integrate with stripe and commercejs to simulate a complete experience without backend
