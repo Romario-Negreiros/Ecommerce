@@ -21,7 +21,7 @@ export const Left = styled.div``;
 
 export const Title = styled.h1`
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   color: ${({ theme: { common } }) => common.cyan};
   @media screen and (min-width: 200px) {
     font-size: 1.4rem;
@@ -96,6 +96,5 @@ export const Circle = styled.div`
 export const Number = styled.span`
   font-size: 1.1rem;
   color: #fff;
-  font-weight: bolder;
   display: block;
 `;

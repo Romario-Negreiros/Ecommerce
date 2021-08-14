@@ -54,7 +54,6 @@ export const Category = styled.li`
 export const Legend = styled.p`
   margin-top: 10px;
   font-size: 1rem;
-  font-weight: 600;
   color: #fff;
   @media screen and (min-width: 800px) {
       font-size: 1.2rem;
@@ -65,7 +64,6 @@ export const Input = styled.input`
   margin-top: 20px;
   width: 100%;
   text-align: center;
-  font-weight: bold;
   border-radius: 2px;
   padding: 15px;
   border: 0 none;

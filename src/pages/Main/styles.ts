@@ -9,7 +9,6 @@ export const Error = styled.div`
   align-items: center;
   color: ${({ theme: { common } }) => common.cyan};
   font-size: 1.2rem;
-  font-weight: 800;
   @media screen and (min-width: 600px) {
     font-size: 1.4rem;
   }
@@ -24,7 +23,6 @@ export const IsLoading = styled.div`
   align-items: center;
   color: ${({ theme: { common } }) => common.cyan};
   font-size: 1.2rem;
-  font-weight: 800;
   @media screen and (min-width: 600px) {
     font-size: 1.4rem;
   }

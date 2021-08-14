@@ -1,28 +1,22 @@
 import { FC, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Cart, Checkout, Products} from '../../components/index';
+import { Home, Cart, Checkout, Products } from '../../components/index';
 import { Header, Searcher } from './components/index';
 import { Error, IsLoading } from './styles';
-import Product from './interfaces/productsInterface';
-import getStoreProducts from './modules/getStoreProducts';
+import { Product } from '@chec/commerce.js/types/product';
+import getInitialData from './modules/getInitialData';
+import { Cart as CartType } from '@chec/commerce.js/types/cart';
 
 const Main: FC = () => {
-  
-  const [products, setProducts] = useState<Product[] | null>(null);
-  const [productsOnCart, setProductsOnCart] = useState<Product[] | null>();
+  const [products, setProducts] = useState<Product[]>();
+  const [cart, setCart] = useState<CartType>();
 
   const [error, setError] = useState<string>('');
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
-    getStoreProducts(
-      'https://fakestoreapi.com/products',
-      setError,
-      setIsLoaded,
-      setProducts,
-      setProductsOnCart
-    );
+    getInitialData(setError, setIsLoaded, setProducts, setCart);
   }, []);
 
   if (error) {
@@ -33,21 +27,31 @@ const Main: FC = () => {
     return (
       <Router>
         <>
-          <Header productsOnCart={productsOnCart as Product[] | null} />
+          <Header cart={cart as CartType} />
           <Switch>
             <Route exact path="/">
               <Searcher setFilter={setFilter} />
-              <Home products={products as Product[]} filter={filter} setProductsOnCart={setProductsOnCart} />
+              <Home
+                products={products as Product[]}
+                filter={filter}
+                setCart={setCart}
+              />
             </Route>
             <Route path="/cart">
-              <Cart productsOnCart={productsOnCart as Product[] | null} setProductsOnCart={setProductsOnCart} />
-            </Route>
-            <Route path="/checkout">
-              <Checkout productsOnCart={productsOnCart as Product[] | null} />
-            </Route>
-            <Route path="/products">
-              <Products products={products as Product[]} setProductsOnCart={setProductsOnCart} />
-            </Route>
+            <Cart
+              cart={cart as CartType}
+              setCart={setCart}
+            />
+          </Route>
+        <Route path="/checkout">
+              <Checkout cart={cart as CartType}/>
+        </Route>
+          <Route path="/products">
+            <Products
+              products={products as Product[]}
+              setCart={setCart}
+            />
+          </Route> 
           </Switch>
         </>
       </Router>
