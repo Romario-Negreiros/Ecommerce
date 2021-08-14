@@ -1,6 +1,6 @@
-import Product from "../../../pages/Main/interfaces/productsInterface";
+import { Cart } from "@chec/commerce.js/types/cart";
 
 export default interface Props {
-    productsOnCart: Product[] | null,
-    setProductsOnCart: (products: Product[] | null) => void
+    cart: Cart,
+    setCart: (cart: Cart) => void
 }

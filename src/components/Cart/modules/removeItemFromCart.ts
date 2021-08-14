@@ -1,30 +1,12 @@
-import { toast } from 'react-toastify';
-import Props from '../interfaces/Props';
+import { Cart } from "@chec/commerce.js/types/cart";
+import { commerce } from "../../../lib/commerce";
 
-const removeItemFromCart = (
-  id: number,
-  setProductsOnCart: (products: Props['productsOnCart'] | null) => void,
-  productsOnCart: Props['productsOnCart']
-) => {
-  const getAllCartItems: number[] = JSON.parse(
-    localStorage.getItem('cartItemsID') as string
-  );
-  const removeItem: number[] = getAllCartItems.filter(
-    idOnCart => idOnCart !== id
-  );
-  if (removeItem.length) {
-    if (productsOnCart) {
-      localStorage.setItem('cartItemsID', JSON.stringify(removeItem));
-      const getNewProductsOnCart = productsOnCart.filter(
-        product => product.id !== id
-      );
-      setProductsOnCart(getNewProductsOnCart);
-      toast('Item succesfully deleted from cart!');
-    }
-  } else {
-    localStorage.removeItem('cartItemsID');
-    setProductsOnCart(null);
-  }
-};
+const removeItemFromCart = async (productId: string, setCart: (cart: Cart) => void) => {
+
+    const { cart } = await commerce.cart.remove(productId)
+
+    setCart(cart);
+
+}
 
 export default removeItemFromCart;

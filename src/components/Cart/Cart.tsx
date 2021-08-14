@@ -14,7 +14,6 @@ import {
   CartItem,
   ItemInfo,
   Title,
-  Category,
   Price,
   Quantity,
   ManageItem,
@@ -24,22 +23,16 @@ import {
 } from './styles';
 import { ToastContainer } from 'react-toastify';
 import removeItemFromCart from './modules/removeItemFromCart';
-import removeAllItemsFromCart from './modules/removeAllItemsFromCart';
+import setCartToEmpty from './modules/setCartToEmpty';
 import manageItemQuantity from './modules/manageItemQuantity';
 
-const Cart: FC<Props> = ({ productsOnCart, setProductsOnCart }) => {
+const Cart: FC<Props> = ({ cart, setCart }) => {
 
-  if (productsOnCart?.length) {
-    const getTotalPrice = productsOnCart?.reduce(
-      (a, product) => a + product.quantity * product.price,
-      0
-    );
-    const getTotalNumberOfItems = productsOnCart?.reduce(
-      (a, product) => a + product.quantity,
-      0
-    );
+  const isEmpty = !cart.line_items.length
+
+  const FilledCart = () => {
+    const { line_items } = cart
     return (
-      <Wrapper>
         <Container>
           <ToastContainer
             role="warning message"
@@ -57,69 +50,60 @@ const Cart: FC<Props> = ({ productsOnCart, setProductsOnCart }) => {
             <Infos>
               <SummaryTitle>Summary</SummaryTitle>
               <SummaryItem>
-                Total price: ${getTotalPrice?.toFixed(2)}{' '}
+                Total price: {cart.subtotal.formatted_with_symbol}
               </SummaryItem>
-              <SummaryItem>Total items: {getTotalNumberOfItems}</SummaryItem>
+              <SummaryItem>
+                Total items: {cart.total_items}
+              </SummaryItem>
+              <SummaryItem>
+                Total unique items: {cart.total_unique_items}
+              </SummaryItem>
             </Infos>
             <Options>
               <SummaryButton
-                onClick={() => removeAllItemsFromCart(setProductsOnCart)}
+                onClick={() => setCartToEmpty(setCart)}
               >
                 Delete all
               </SummaryButton>
-              <LinkTag to="/checkout" style={{ background: '#2bdc0a' }}>
+              <LinkTag to="/checkout">
                 Checkout
               </LinkTag>
             </Options>
           </Summary>
           <CartList>
-            {productsOnCart?.map(product => {
-              const { id, title, price, category, quantity } = product;
+            {line_items.map(product => {
               return (
-                <CartItem key={id}>
+                <CartItem key={product.id}>
                   <ItemInfo>
-                    <Title>{title}</Title>
-                    <Category>
-                      Category:{' '}
-                      {category.charAt(0).toUpperCase() + category.substring(1)}
-                    </Category>
-                    <Price>$ {(price * quantity).toFixed(2)}</Price>
-                    <Quantity>Quantity : {quantity}</Quantity>
+                    <Title>{product.name}</Title>
+                    <Price>Unity price: {product.price.formatted_with_symbol}</Price>
+                    <Price>Total price: {product.line_total.formatted_with_symbol}</Price>
+                    <Quantity>Quantity: {product.quantity}</Quantity>
                   </ItemInfo>
                   <ManageItem>
                     <ManagerButton
-                      onClick={() =>
-                        removeItemFromCart(
-                          id,
-                          setProductsOnCart,
-                          productsOnCart
-                        )
-                      }
+                      onClick={() => removeItemFromCart(product.id, setCart) }
                       style={{ background: '#f70029' }}
                     >
                       Delete
                     </ManagerButton>
                     <QuantityButton
-                      data-action="more"
-                      onClick={event =>
+                      onClick={() =>
                         manageItemQuantity(
-                          event,
-                          id,
-                          productsOnCart,
-                          setProductsOnCart
+                          product.id,
+                          product.quantity + 1,
+                          setCart
                         )
                       }
                     >
                       More one
                     </QuantityButton>
                     <QuantityButton
-                      data-action="less"
-                      onClick={event =>
+                      onClick={() =>
                         manageItemQuantity(
-                          event,
-                          id,
-                          productsOnCart,
-                          setProductsOnCart
+                          product.id,
+                          product.quantity - 1,
+                          setCart
                         )
                       }
                     >
@@ -131,17 +115,21 @@ const Cart: FC<Props> = ({ productsOnCart, setProductsOnCart }) => {
             })}
           </CartList>
         </Container>
-      </Wrapper>
     );
-  } else {
+  } 
+  const EmptyCart = () => {
     return (
-      <Wrapper>
         <Error>
           Your cart is empty!
         </Error>
-      </Wrapper>
     );
   }
+
+  return (
+    <Wrapper>
+      {isEmpty ? <EmptyCart /> : <FilledCart />}
+    </Wrapper>
+  )
 };
 
 export default Cart;

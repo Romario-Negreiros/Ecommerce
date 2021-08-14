@@ -41,7 +41,6 @@ export const SummaryTitle = styled.div`
 `;
 
 export const SummaryItem = styled.p`
-  font-weight: 700;
   font-size: 1.2rem;
   margin-top: 5px;
 `;
@@ -49,9 +48,10 @@ export const SummaryItem = styled.p`
 export const SummaryButton = styled.button`
   margin-top: 5px;
   font-size: 1.1rem;
-  color: #000;
+  font-weight: unset;
+  color: ${({theme: { common }}) => common.cyan };
   padding: 10px 15px;
-  background: ${({ theme: { common } }) => common.cyan};
+  background: ${({theme: { backgrounds }}) => backgrounds.headerbg };
   cursor: pointer;
   transition: opacity 0.4s;
   border: 0 none;
@@ -67,12 +67,12 @@ export const SummaryButton = styled.button`
 export const LinkTag = styled(Link)`
   margin-top: 5px;
   font-size: 1.1rem;
+  border-radius: 2px;
   cursor: pointer;
-  color: #000;
-  font-weight: bold;
+  color: ${({theme: { common }}) => common.cyan };
   text-align: center;
+  background: ${({theme: { backgrounds }}) => backgrounds.headerbg };
   padding: 10px 15px;
-  background: ${({ theme: { common } }) => common.cyan};
   transition: opacity 0.4s;
   border: 0 none;
   :hover {
@@ -141,19 +141,11 @@ export const Title = styled.h2`
 `;
 
 export const Price = styled.p`
-  font-weight: 800;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-`;
-
-export const Category = styled.p`
-  font-weight: 800;
   font-size: 1.2rem;
   margin-bottom: 10px;
 `;
 
 export const Quantity = styled.p`
-  font-weight: 800;
   font-size: 1.2rem;
 `;
 
