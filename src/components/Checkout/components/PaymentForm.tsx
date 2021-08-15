@@ -47,9 +47,9 @@ const PaymentForm: FC<Props> = ({ shippingData, setCart, setOrder, setErrorOnCre
           postal_zipcode: shippingData.zip,
           country: shippingData.shippingCountry,
         },
-        fulfillment: { shipping_method: shippingData.shippingOption },
+        fulfillment: { shipping_method: shippingData.shippingOption[0].id },
         payment: {
-            gateway: 'stripe',
+            gateway: 'gway_0o3rdZqdjdv8wD',
             stripe: {
                 payment_method_id: paymentMethod.id
             }

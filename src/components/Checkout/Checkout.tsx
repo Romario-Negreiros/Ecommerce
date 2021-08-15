@@ -5,7 +5,7 @@ import {
   Step,
   StepLabel,
   Typography,
-  // CircularProgress,
+  CircularProgress,
   Divider,
   Button,
 } from '@material-ui/core';
@@ -15,7 +15,7 @@ import PaymentForm from './components/PaymentForm';
 import ShippingForm from './components/ShippingForm';
 import Props from './interfaces/CheckoutProps';
 import Inputs from './interfaces/Inputs';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { commerce } from '../../lib/commerce';
 import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
@@ -24,7 +24,6 @@ import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-captur
 const steps = ['Shipping address', 'Payment details'];
 
 const Checkout: FC<Props> = ({ cart, setCart }) => {
-
   const { line_items } = cart;
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -32,37 +31,63 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken>();
   const [order, setOrder] = useState<CheckoutCaptureResponse>();
   const [errorOnCreatingOrder, setErrorOnCreatingOrder] = useState<string>('');
-  console.log(order);
-  console.log(errorOnCreatingOrder);
+
+  const history = useHistory();
 
   useEffect(() => {
-      const generateToken = async () => {
-        try {
 
-          const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-          setCheckoutToken(token);
-
-        } catch(err) {
-          
-        }
+    const generateToken = async () => {
+      try {
+        const token = await commerce.checkout.generateToken(cart.id, {
+          type: 'cart',
+        });
+        setCheckoutToken(token);
+      } catch (err) {
+        history.push('/');
       }
+    };
 
-      generateToken();
-  }, [cart])
+    generateToken();
+  }, [cart, history]);
 
-  const Confirmation = () => {
-    return (
+  const Confirmation = () =>
+    order?.customer ? (
       <>
         <div>
-          <Typography variant="h5">Thank you for your purchase, firstname lastname</Typography>
+          <Typography variant="h5">
+            Thank you for your purchase, {order?.customer.firstname}{' '}
+            {order?.customer.lastname}
+          </Typography>
           <Divider className={classes.divider} />
-          <Typography variant="subtitle2">Order ref: ref</Typography>
+          <Typography variant="subtitle2">
+            Order ref: {order?.customer_reference}
+          </Typography>
         </div>
         <br />
-        <Button component={Link} to="/" variant="outlined" className={classes.button}>Back to home</Button>
+        <Button
+          component={Link}
+          to="/"
+          variant="outlined"
+          className={classes.button}
+        >
+          Back to home
+        </Button>
       </>
+    ) : (
+      <div className={classes.spinner}>
+        <CircularProgress />
+      </div>
     );
-  };
+
+  const Error = () => (
+    <>
+      <Typography variant="h5">Error: {errorOnCreatingOrder}</Typography>
+      <br />
+      <Button component={Link} to="/" variant="outlined" type="button">
+        Back to home
+      </Button>
+    </>
+  );
 
   const nextStep = () =>
     setActiveStep(previousActiveStep => previousActiveStep + 1);
@@ -77,41 +102,59 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
 
   const FormToShow = () =>
     activeStep === 0 ? (
-      <ShippingForm next={next} checkoutToken={checkoutToken as CheckoutToken} />
+      <ShippingForm
+        next={next}
+        checkoutToken={checkoutToken as CheckoutToken}
+      />
     ) : (
-      <PaymentForm setCart={setCart} setOrder={setOrder} setErrorOnCreatingOrder={setErrorOnCreatingOrder} shippingData={shippingData as Inputs} checkoutToken={checkoutToken as CheckoutToken} backStep={backStep} nextStep={nextStep} />
+      <PaymentForm
+        setCart={setCart}
+        setOrder={setOrder}
+        setErrorOnCreatingOrder={setErrorOnCreatingOrder}
+        shippingData={shippingData as Inputs}
+        checkoutToken={checkoutToken as CheckoutToken}
+        backStep={backStep}
+        nextStep={nextStep}
+      />
     );
 
-  
-  if(line_items.length) {
-  return (
-    <>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography variant="h3" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map(step => (
-              <Step key={step}>
-                <StepLabel>
-                  <StepLabelText>{step}</StepLabelText>
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          {activeStep === steps.length ? <Confirmation /> : checkoutToken && <FormToShow />}
-        </Paper>
-      </main>
-    </>
-  );
-            } else {
-              return (
-                <div>
-                  <h1>Your cart is empty</h1>
-                </div>
+  if (line_items.length) {
+    return (
+      <>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Typography variant="h3" align="center">
+              Checkout
+            </Typography>
+            <Stepper activeStep={activeStep} className={classes.stepper}>
+              {steps.map(step => (
+                <Step key={step}>
+                  <StepLabel>
+                    <StepLabelText>{step}</StepLabelText>
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {activeStep === steps.length ? (
+              errorOnCreatingOrder ? (
+                <Error />
+              ) : (
+                <Confirmation />
               )
-            }
+            ) : (
+              checkoutToken && <FormToShow />
+            )}
+          </Paper>
+        </main>
+      </>
+    );
+  } else {
+    return (
+      <div>
+        <h1>Your cart is empty</h1>
+      </div>
+    );
+  }
 };
 
 export default Checkout;

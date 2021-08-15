@@ -7,5 +7,5 @@ export default interface Inputs {
   zip: string;
   shippingCountry: string;
   shippingSubdivision: string;
-  shippingOption: string;
+  shippingOption: any;
 }

@@ -24,7 +24,7 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
   const [shippingCountry, setShippingCountry] = useState<string>('');
   const [shippingSubdivisions, setShippingSubdivisions] = useState<shippingTypes>();
   const [shippingSubdivision, setShippingSubdivision] = useState<string>('');
-  const [shippingOption, setShippingOption] = useState<string>('');
+  const [shippingOption, setShippingOption] = useState<any>('');
 
   const countries: { id: string; label: string }[] | undefined =
     shippingCountries &&
@@ -57,6 +57,12 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
     setShippingSubdivision(Object.keys(subdivisions)[0]);
   };
 
+  const fetchShippingOption = async (checkoutTokenId: string, country: string, region: string) => {
+    const option = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
+
+    setShippingOption(option)
+  }
+
   useEffect(() => {
     fetchShippingCountries(checkoutToken.id);
   }, [checkoutToken.id]);
@@ -68,6 +74,10 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
     };
     
   }, [shippingCountry]);
+
+  useEffect(() => {
+    if(shippingSubdivision) fetchShippingOption(checkoutToken.id, shippingCountry, shippingSubdivision);
+  }, [shippingSubdivision, checkoutToken.id, shippingCountry])
 
   const classes = useStyles();
   const methods = useForm<Inputs>();
@@ -137,7 +147,7 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
               <Grid item xs={12} sm={6}>
                 <InputLabel>Shipping Option</InputLabel>
                 <Typography gutterBottom>
-                  {shippingOption}
+                  {shippingCountry === 'US' ? 'Domestic - $0,00' : 'International - $10,00'}
                 </Typography>
               </Grid>
           </Grid>
