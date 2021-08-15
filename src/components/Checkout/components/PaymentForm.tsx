@@ -8,13 +8,13 @@ import {
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
-import handleCheckoutCapture from '../modules/handleCheckoutCapture';
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLIC_KEY as string
 );
 
-const PaymentForm: FC<Props> = ({ shippingData, setCart, setOrder, setErrorOnCreatingOrder, checkoutToken, backStep, nextStep }) => {
+const PaymentForm: FC<Props> = ({ checkoutToken, backStep, nextStep, timeout }) => {
+  
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     elements: any,
@@ -24,39 +24,8 @@ const PaymentForm: FC<Props> = ({ shippingData, setCart, setOrder, setErrorOnCre
 
     if (!stripe || !elements) return;
 
-    const cardElement = elements.getElement(CardElement);
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-    });
-
-    if (error) console.error(error);
     else {
-      const orderData = {
-        line_items: checkoutToken.live.line_items,
-        customer: {
-          firstname: shippingData.firstName,
-          lastname: shippingData.lastName,
-          email: shippingData.email,
-        },
-        shipping: {
-          name: 'Primary',
-          street: shippingData.address1,
-          town_city: shippingData.city,
-          postal_zipcode: shippingData.zip,
-          country: shippingData.shippingCountry,
-        },
-        fulfillment: { shipping_method: shippingData.shippingOption[0].id },
-        payment: {
-            gateway: 'gway_0o3rdZqdjdv8wD',
-            stripe: {
-                payment_method_id: paymentMethod.id
-            }
-        }
-      };
-
-      handleCheckoutCapture(checkoutToken.id, orderData, setCart, setOrder, setErrorOnCreatingOrder)
+      timeout(3000);
       nextStep();
     }
   };

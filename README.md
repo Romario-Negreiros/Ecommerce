@@ -1,16 +1,12 @@
 <h2 style="text-align: center">ReactCommerce</h2>
 
-That's a front end only ecommerce, being built with react, typescript and styled components.
+A simple ecommerce, built with react, typescript, commercejs and stripe
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-## Status
-Integrating with the commerce.js library, which allows me to have a full ecommerce management, such as cart methods, checkout and also login and logout of clients without needing a backend.
-
 #### Brief
-* Users will be able to login
-* See a historic of their orderers
-* See their cart items even when the browser has been closed
+
+* Users will be able to simulate a real ecommerce flow, addind, removing, editing quantity, and checking out
 * Fill in all the fields on checkout and go ahead to conclude 'pay' and conclude the order
 * The products list will be filterable
 * Each product has its own dedicated page with more detailed informations
@@ -42,10 +38,6 @@ Integrating with the commerce.js library, which allows me to have a full ecommer
 - [x] Checkout form with validations.
 - [x] Modal with shipping summary.
 - [x] Checkout component with Material UI for a better looking form
-- [ ] Create a login form along with the commercejs library
-- [ ] Create avaliations field on detailed page for every product.
-- [ ] Keep track of user's shipping historic, and create a dashboard to see it
-- [ ] Integrate with stripe and commercejs to simulate a complete experience without backend
 
 -----------------------------------------------------------------------------------------------------------------------------
 

@@ -6,7 +6,6 @@ import {
   StepLabel,
   Typography,
   CircularProgress,
-  Divider,
   Button,
 } from '@material-ui/core';
 import { StepLabelText } from './styled';
@@ -19,7 +18,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { commerce } from '../../lib/commerce';
 import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
-import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
+import refreshCart from './modules/refreshCart';
+import { Error, Wrapper } from '../Home/styles';
 
 const steps = ['Shipping address', 'Payment details'];
 
@@ -28,39 +28,40 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
   const [shippingData, setShippingData] = useState<Inputs>();
+  const [isFinished, setIsFinished] = useState<boolean>(false);
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken>();
-  const [order, setOrder] = useState<CheckoutCaptureResponse>();
-  const [errorOnCreatingOrder, setErrorOnCreatingOrder] = useState<string>('');
+
+  const timeout = (timeout: number) => {
+    setTimeout(() => {
+      setIsFinished(true);
+    }, timeout);
+  };
 
   const history = useHistory();
 
   useEffect(() => {
+      const generateToken = async () => {
+        try {
+          const token = await commerce.checkout.generateToken(cart.id, {
+            type: 'cart',
+          });
+          setCheckoutToken(token);
+        } catch (err) {
+          timeout(6000);
+          history.push('/');
+        }
+      };
 
-    const generateToken = async () => {
-      try {
-        const token = await commerce.checkout.generateToken(cart.id, {
-          type: 'cart',
-        });
-        setCheckoutToken(token);
-      } catch (err) {
-        history.push('/');
-      }
-    };
-
-    generateToken();
+      generateToken();
   }, [cart, history]);
 
   const Confirmation = () =>
-    order?.customer ? (
+    isFinished ? (
       <>
         <div>
           <Typography variant="h5">
-            Thank you for your purchase, {order?.customer.firstname}{' '}
-            {order?.customer.lastname}
-          </Typography>
-          <Divider className={classes.divider} />
-          <Typography variant="subtitle2">
-            Order ref: {order?.customer_reference}
+            Thank you for your purchase {shippingData?.firstName}{' '}
+            {shippingData?.lastName}
           </Typography>
         </div>
         <br />
@@ -69,6 +70,7 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
           to="/"
           variant="outlined"
           className={classes.button}
+          onClick={() => refreshCart(setCart)}
         >
           Back to home
         </Button>
@@ -78,16 +80,6 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
         <CircularProgress />
       </div>
     );
-
-  const Error = () => (
-    <>
-      <Typography variant="h5">Error: {errorOnCreatingOrder}</Typography>
-      <br />
-      <Button component={Link} to="/" variant="outlined" type="button">
-        Back to home
-      </Button>
-    </>
-  );
 
   const nextStep = () =>
     setActiveStep(previousActiveStep => previousActiveStep + 1);
@@ -108,10 +100,7 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
       />
     ) : (
       <PaymentForm
-        setCart={setCart}
-        setOrder={setOrder}
-        setErrorOnCreatingOrder={setErrorOnCreatingOrder}
-        shippingData={shippingData as Inputs}
+        timeout={timeout}
         checkoutToken={checkoutToken as CheckoutToken}
         backStep={backStep}
         nextStep={nextStep}
@@ -136,11 +125,7 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
               ))}
             </Stepper>
             {activeStep === steps.length ? (
-              errorOnCreatingOrder ? (
-                <Error />
-              ) : (
-                <Confirmation />
-              )
+              <Confirmation />
             ) : (
               checkoutToken && <FormToShow />
             )}
@@ -150,9 +135,9 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
     );
   } else {
     return (
-      <div>
-        <h1>Your cart is empty</h1>
-      </div>
+      <Wrapper>
+        <Error>Your cart is empty</Error>
+      </Wrapper>
     );
   }
 };

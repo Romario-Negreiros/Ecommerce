@@ -2,7 +2,6 @@ import { FC } from 'react';
 import Props from './interfaces/Props';
 import Home from '../../../../assets/home.svg';
 import Cart from '../../../../assets/cart.svg';
-import Checkout from '../../../../assets/checkout.svg';
 import {
   Container,
   Icon,
@@ -36,9 +35,6 @@ const Header: FC<Props> = ({ cart }) => {
               <Circle>
                 <Number>{total_items}</Number>
               </Circle>
-            </LinkTag>
-            <LinkTag to="/checkout">
-              <Icon src={Checkout} />
             </LinkTag>
           </NavItem>
         </NavList>
