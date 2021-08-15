@@ -110,11 +110,6 @@ export const CartIcon = styled.img`
   transform: translate(-2px, 1px);
 `;
 
-export const BookMarkIcon = styled.img`
-  width: 25px;
-  height: 25px;
-`;
-
 export const Error = styled.p`
   font-size: 1.5rem;
   color: #fff;

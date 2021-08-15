@@ -12,13 +12,10 @@ import {
   LinkTag,
   Manage,
   Circle,
-  BookMarkIcon,
   CartIcon,
   Error,
 } from './styles';
 import CartPlus from '../../assets/cartplus.svg';
-import Bookmark from '../../assets/bookmark.svg';
-// import Bookmarked from '../../assets/bookmarder.svg';
 import Props from './interfaces/Props';
 import addItemOnCart from './modules/addItemOnCart';
 import { ToastContainer } from 'react-toastify';
@@ -55,9 +52,6 @@ const Home: FC<Props> = ({ products, filter, setCart }) => {
               >
                 <CartIcon src={CartPlus} alt="add cart" />
               </Circle>
-              <Circle>
-                <BookMarkIcon src={Bookmark} alt="save to favorites" />
-              </Circle>
             </Manage>
           </Card>
         );
@@ -84,9 +78,6 @@ const Home: FC<Props> = ({ products, filter, setCart }) => {
               onClick={() => addItemOnCart(product.id, 1, setCart)}
             >
               <CartIcon src={CartPlus} alt="add cart" />
-            </Circle>
-            <Circle>
-              <BookMarkIcon src={Bookmark} alt="save to favorites" />
             </Circle>
           </Manage>
         </Card>
