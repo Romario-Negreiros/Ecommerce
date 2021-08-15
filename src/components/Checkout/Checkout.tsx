@@ -32,6 +32,8 @@ const Checkout: FC<Props> = ({ cart, setCart }) => {
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken>();
   const [order, setOrder] = useState<CheckoutCaptureResponse>();
   const [errorOnCreatingOrder, setErrorOnCreatingOrder] = useState<string>('');
+  console.log(order);
+  console.log(errorOnCreatingOrder);
 
   useEffect(() => {
       const generateToken = async () => {
