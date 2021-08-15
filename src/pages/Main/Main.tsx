@@ -44,7 +44,7 @@ const Main: FC = () => {
             />
           </Route>
         <Route path="/checkout">
-              <Checkout cart={cart as CartType}/>
+              <Checkout setCart={setCart} cart={cart as CartType}/>
         </Route>
           <Route path="/products">
             <Products
