@@ -8,12 +8,13 @@ import {
 } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
+import handleCheckoutCapture from '../modules/handleCheckoutCapture';
 
 const stripePromise = loadStripe(
   process.env.REACT_APP_STRIPE_PUBLIC_KEY as string
 );
 
-const PaymentForm: FC<Props> = ({ shippingData, cart, backStep, nextStep }) => {
+const PaymentForm: FC<Props> = ({ shippingData, setCart, setOrder, setErrorOnCreatingOrder, checkoutToken, backStep, nextStep }) => {
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
     elements: any,
@@ -23,42 +24,46 @@ const PaymentForm: FC<Props> = ({ shippingData, cart, backStep, nextStep }) => {
 
     if (!stripe || !elements) return;
 
-    // const cardElement = elements.getElement(CardElement);
+    const cardElement = elements.getElement(CardElement);
 
-    // const { error, paymentMethod } = await stripe.createPaymentMethod({
-    //   type: 'card',
-    //   card: cardElement,
-    // });
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+    });
 
-    // if (error) console.error(error);
-    // else {
-    //   const oderData = {
-    //     customer: {
-    //       firstname: shippingData.firstName,
-    //       lastname: shippingData.lastName,
-    //       email: shippingData.email,
-    //     },
-    //     shipping: {
-    //       name: 'Primary',
-    //       street: shippingData.address1,
-    //       town_city: shippingData.city,
-    //       postal_zipcode: shippingData.zip
-    //     },
-    //     payment: {
-    //         gateway: 'stripe',
-    //         stripe: {
-    //             payment_method_id: paymentMethod.id
-    //         }
-    //     }
-    //   };
+    if (error) console.error(error);
+    else {
+      const orderData = {
+        line_items: checkoutToken.live.line_items,
+        customer: {
+          firstname: shippingData.firstName,
+          lastname: shippingData.lastName,
+          email: shippingData.email,
+        },
+        shipping: {
+          name: 'Primary',
+          street: shippingData.address1,
+          town_city: shippingData.city,
+          postal_zipcode: shippingData.zip,
+          country: shippingData.shippingCountry,
+        },
+        fulfillment: { shipping_method: shippingData.shippingOption },
+        payment: {
+            gateway: 'stripe',
+            stripe: {
+                payment_method_id: paymentMethod.id
+            }
+        }
+      };
 
+      handleCheckoutCapture(checkoutToken.id, orderData, setCart, setOrder, setErrorOnCreatingOrder)
       nextStep();
-    //}
+    }
   };
 
   return (
     <>
-      <Review cart={cart} />
+      <Review checkoutToken={checkoutToken} />
       <Divider />
       <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
         Payment Method

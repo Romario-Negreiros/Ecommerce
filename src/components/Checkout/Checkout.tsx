@@ -13,22 +13,25 @@ import { StepLabelText } from './styled';
 import useStyles from './styles';
 import PaymentForm from './components/PaymentForm';
 import ShippingForm from './components/ShippingForm';
-import Props from './interfaces/CheckoutReviewProps';
+import Props from './interfaces/CheckoutProps';
 import Inputs from './interfaces/Inputs';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { commerce } from '../../lib/commerce';
 import { CheckoutToken } from '@chec/commerce.js/types/checkout-token';
+import { CheckoutCaptureResponse } from '@chec/commerce.js/types/checkout-capture-response';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout: FC<Props> = ({ cart }) => {
+const Checkout: FC<Props> = ({ cart, setCart }) => {
 
   const { line_items } = cart;
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
   const [shippingData, setShippingData] = useState<Inputs>();
   const [checkoutToken, setCheckoutToken] = useState<CheckoutToken>();
+  const [order, setOrder] = useState<CheckoutCaptureResponse>();
+  const [errorOnCreatingOrder, setErrorOnCreatingOrder] = useState<string>('');
 
   useEffect(() => {
       const generateToken = async () => {
@@ -38,7 +41,7 @@ const Checkout: FC<Props> = ({ cart }) => {
           setCheckoutToken(token);
 
         } catch(err) {
-
+          
         }
       }
 
@@ -74,7 +77,7 @@ const Checkout: FC<Props> = ({ cart }) => {
     activeStep === 0 ? (
       <ShippingForm next={next} checkoutToken={checkoutToken as CheckoutToken} />
     ) : (
-      <PaymentForm shippingData={shippingData as Inputs} cart={cart} backStep={backStep} nextStep={nextStep} />
+      <PaymentForm setCart={setCart} setOrder={setOrder} setErrorOnCreatingOrder={setErrorOnCreatingOrder} shippingData={shippingData as Inputs} checkoutToken={checkoutToken as CheckoutToken} backStep={backStep} nextStep={nextStep} />
     );
 
   

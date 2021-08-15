@@ -22,11 +22,9 @@ type shippingTypes = {
 const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
   const [shippingCountries, setShippingCountries] = useState<shippingTypes>();
   const [shippingCountry, setShippingCountry] = useState<string>('');
-  const [shippingSubdivisions, setShippingSubdivisions] =
-    useState<shippingTypes>();
+  const [shippingSubdivisions, setShippingSubdivisions] = useState<shippingTypes>();
   const [shippingSubdivision, setShippingSubdivision] = useState<string>('');
-//   const [shippingOptions, setShippingOptions] = useState();
-//   const [shippingOption, setShippingOption] = useState<string>();
+  const [shippingOption, setShippingOption] = useState<string>('');
 
   const countries: { id: string; label: string }[] | undefined =
     shippingCountries &&
@@ -59,19 +57,16 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
     setShippingSubdivision(Object.keys(subdivisions)[0]);
   };
 
-//   const fetchShippingOptions = async (checkoutTokenId: string, country: string, region: string) => {
-//     const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
-
-//     setShippingOptions(options);
-//     setShippingOption(options[0]);
-//   }
-
   useEffect(() => {
     fetchShippingCountries(checkoutToken.id);
   }, [checkoutToken.id]);
 
   useEffect(() => {
-    if (shippingCountry) fetchSubdivisions(shippingCountry);
+    if (shippingCountry) {
+      fetchSubdivisions(shippingCountry)
+      shippingCountry === 'US' ? setShippingOption('Domestic - $0,00') : setShippingOption('International - $10,00')
+    };
+    
   }, [shippingCountry]);
 
   const classes = useStyles();
@@ -83,7 +78,17 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
         Shipping address
       </Typography>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(data => next({ ...data }))}>
+        <form
+          onSubmit={methods.handleSubmit(data => {
+            next({
+              ...data,
+              shippingCountry,
+              shippingSubdivision,
+              shippingOption
+            })
+          }
+          )}
+        >
           <Grid container spacing={3}>
             <FormInput name="firstName" label="First name" />
             <FormInput name="lastName" label="Last name" />
@@ -94,7 +99,7 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Country</InputLabel>
               <Select
-                value={shippingCountry} 
+                value={shippingCountry}
                 fullWidth
                 onChange={(
                   event: React.ChangeEvent<{
@@ -120,9 +125,7 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
                     name?: string | undefined;
                     value: unknown;
                   }>
-                ) =>
-                  setShippingSubdivision(event.target.value as string)
-                }
+                ) => setShippingSubdivision(event.target.value as string)}
               >
                 {subdivisions?.map(subdivision => (
                   <MenuItem key={subdivision.id} value={subdivision.id}>
@@ -131,6 +134,12 @@ const ShippingForm: FC<Props> = ({ next, checkoutToken }) => {
                 ))}
               </Select>
             </Grid>
+              <Grid item xs={12} sm={6}>
+                <InputLabel>Shipping Option</InputLabel>
+                <Typography gutterBottom>
+                  {shippingOption}
+                </Typography>
+              </Grid>
           </Grid>
           <br />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>

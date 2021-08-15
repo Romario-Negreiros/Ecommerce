@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
-import Props from '../interfaces/CheckoutReviewProps';
+import Props from '../interfaces/ReviewProps';
 
-const Review: FC<Props> = ({ cart }) => {
+const Review: FC<Props> = ({ checkoutToken }) => {
 
     return (
       <>
@@ -10,7 +10,7 @@ const Review: FC<Props> = ({ cart }) => {
           Order summary
         </Typography>
         <List disablePadding>
-          {cart.line_items.map(product => (
+          {checkoutToken.live.line_items.map(product => (
             <ListItem key={product.id} style={{ padding: '10px 0'}}>
                 <ListItemText primary={product.name} secondary={`Quantity: ${product.quantity}`} />
                 <Typography variant="body2">
@@ -21,7 +21,7 @@ const Review: FC<Props> = ({ cart }) => {
           <ListItem style={{padding: '10px 0'}}>
               <ListItemText primary="Total" />
               <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-                  {cart.subtotal.formatted_with_symbol}
+                  {checkoutToken.live.subtotal.formatted_with_symbol}
               </Typography>
           </ListItem>
         </List>

@@ -5,4 +5,7 @@ export default interface Inputs {
   email: string;
   city: string;
   zip: string;
+  shippingCountry: string;
+  shippingSubdivision: string;
+  shippingOption: string;
 }

@@ -10,7 +10,7 @@ const FormInput: FC<Props> = ({ name, label }) => {
     <Grid item xs={12} sm={6}>
       <Controller
         render={({field}) => (
-          <TextField {...field} fullWidth={true} label={label} required={true} />
+          <TextField {...field} fullWidth={true} label={label} required />
         )}
         defaultValue=""
         control={control}
